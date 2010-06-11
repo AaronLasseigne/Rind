@@ -1,0 +1,111 @@
+= Rind
+
+Rind is a templating engine that turns HTML (and XML) into node trees
+and allows you to create custom tags or reuse someone else's genius.
+Rind gives web devs tags to work with and provides the same thing to
+app devs as an object. This project is just getting started so watch
+out for sharp corners and unfinished rooms. Enough of that, let's talk
+about what's done.
+
+== Come say "Hello".
+
+  # example.rb
+  require 'rind'
+
+  # Create a new document and load your template.
+  doc = Rind::Document.new('index.html')
+
+  # Xpath search for the the title and add some text.
+  doc.sf('/html/head/title').children.push('Hello World')
+
+  # Send it out the door.
+  puts doc.render!
+
+== Create your own!
+
+One of the great things about Rind is that you can create your own HTML
+elements and bundle them in modules. Imagine making a module that performs
+a variety of useful functions on images. For example, it could provide
+a gallery view that automatically generates thumbnails and paginates. Clicked
+pics could provide full sized versions of themselves in a lightbox.
+
+Create your custom module.
+
+  # images.rb
+  require 'rind'
+
+  module Images
+    class Gallery < Rind::Element
+      attr_accessor :path_to_images
+
+      # gallery magic here
+      ...
+    end
+  end
+
+App devs treat it like an object.
+
+  # index.cgi
+  require 'rind'
+  require 'images'
+
+  doc = Rind::Document.new('index.html')
+  doc.sf('/html/body/images:gallery').path_to_images = '/home/me/photos'
+  puts doc.render!
+
+Web devs treat it like a tag.
+
+  # index.html
+  <html>
+    <body>
+      <images:gallery width="400px" per_row="5" max_rows="3"/>
+    </body>
+  </html>
+
+And just like a regular Ruby module, if you make it available, we can all benefit.
+
+== Mucking with standard HTML
+
+Interested in modifying the behavior of a standard HTML element? Let's
+say that you want all external links to use <tt>rel="nofollow"</tt>.
+Rather than remembering to do this every time you can build it into a base
+namespace.
+
+Create your base module.
+
+  # core.rb
+  require 'rind'
+
+  module Core
+    class A < Rind::Html::A
+      def initialize(options={})
+	      super(options)
+	      @attributes[:rel] = 'nofollow' if is_external?
+      end
+
+      def is_external?
+        ....
+      end
+      private :is_external?
+    end
+  end
+
+Pass it to the Document as the <tt>base_namespace</tt>.
+
+  # my_file.cgi
+  require 'rind'
+  require 'core'
+
+  doc = Document.new('index.html', :base_namespace => 'core')
+  puts doc.render!
+
+The links in <tt>index.html</tt> will now have the <tt>rel</tt> attribute
+automatically added.
+  <a href="http://github.com" rel="nofollow">GitHub</a>
+
+== The Future?
+This is an early release. An alpha of sorts. The interface may change before it's
+all over. Rind needs to help out modules with style sheets, JavaScript libraries,
+images, querying system/user info, etc. Virtually no time has been spent optimizing
+the code. More test cases need to be written. I still have a bunch of stuff in my
+office that needs filing. You get the idea.
