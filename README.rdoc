@@ -7,9 +7,13 @@ app devs as an object. This project is just getting started so watch
 out for sharp corners and unfinished rooms. Enough of that, let's talk
 about what's done.
 
+== Installation
+  gem install rind
+
 == Come say "Hello".
 
   # example.rb
+  require 'rubygems'
   require 'rind'
 
   # Create a new document and load your template.
