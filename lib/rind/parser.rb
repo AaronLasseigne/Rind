@@ -36,7 +36,7 @@ module Rind
 			text_end = match.begin(0)
 			if text_start < text_end
 				text = content[text_start...text_end]
-				tokens.push([TEXT, text]) if text !~ /^\s*$/
+				tokens.push([TEXT, text]) if text !~ /\A\s*\z/
 			end
 			text_start = match.end(0)
 

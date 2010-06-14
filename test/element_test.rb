@@ -6,15 +6,26 @@ class ElementTest < Test::Unit::TestCase
     @element = Rind::Element.new(
 			:attributes => {:class => "foo", :id => 'bar'},
 			:children   => ['This is some text!', Rind::Element.new()]
-		);
+		)
   end
 
 	def test_attribute_parsing
     element2 = Rind::Element.new(
 			:attributes => 'class="foo" id="bar"',
 			:children   => ['This is some text!', Rind::Element.new()]
-		);
+		)
 		assert_equal(element2, @element)
+
+		element3 = Rind::Element.new(
+			:attributes => 'id=foo class="hi bye" selected one=\'1\' other="\'first\' second" http-equiv="boo" type="text/css"'
+		)
+		assert_equal(element3[:id], 'foo')
+		assert_equal(element3[:class], 'hi bye')
+		assert_equal(element3[:selected], '')
+		assert_equal(element3[:one], '1')
+		assert_equal(element3[:other], "'first' second")
+		assert_equal(element3['http-equiv'], "boo")
+		assert_equal(element3[:type], "text/css")
 	end
 
   def test_accessor
