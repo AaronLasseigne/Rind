@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
 	spec.homepage = 'http://github.com/AaronLasseigne/Rind'
 
 	spec.test_files = Dir['test/*.rb'] + Dir['test/files/*']
-	spec.files      = Dir['lib/**/*.rb'] + ['README.rdoc', 'LICENSE'] + spec.test_files
+	spec.files      = Dir['lib/**/*.rb'] + ['README.rdoc', 'LICENSE', 'CHANGELOG.rdoc'] + spec.test_files
 
 	spec.has_rdoc     = true
 	spec.rdoc_options = ["--quiet"]
