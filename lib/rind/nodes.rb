@@ -103,9 +103,9 @@ module Rind
 					@attributes[k.to_s] = v
 				end
 			elsif options[:attributes].is_a? String
-				options[:attributes].split(/\s+/).each do |attribute|
-					name, value = attribute.split(/=/)
-					@attributes[name] = value.scan(/\"(.*?)\"/).to_s
+				# scan for attr=value|"value1 'value2'"|'"value1" value2' or attr by itself
+				options[:attributes].scan(/([\w-]+)(?:=(\w+|"[^"]+?"|'[^']+?'))?/) do |name, value|
+					@attributes[name] = value.nil? ? '' : value.sub(/\A(["'])([^\1]+)\1\z/, '\2')
 				end
 			end
 
