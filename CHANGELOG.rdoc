@@ -1,3 +1,5 @@
+== 0.2.0
+
 == 0.1.1 - 2010.06.14
 * Attributes without a value or with a value containing a space broke the parser.
 * Text nodes with newlines were being cleared when they should not have been.
