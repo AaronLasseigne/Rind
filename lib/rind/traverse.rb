@@ -4,12 +4,16 @@ module Traverse
 	# Creates a Rind::Nodes list of all ancestors. If an Xpath
 	# is provided it will only return the nodes that match.
 	def ancestors(path = nil)
-		if not self.parent.nil?
-			ancestors = Rind::Nodes.new([self.parent])
+		node = self
+		ancestors = Rind::Nodes.new()
+		while not node.parent.nil?
+			node = node.parent
+			ancestors.push(node)
+		end
 
-			parent_ancestors = self.parent.ancestors
-			ancestors.push(*parent_ancestors) if not parent_ancestors.nil?
-
+		if ancestors.empty?
+			nil
+		else
 			path.nil? ? ancestors : ancestors.filter(path)
 		end
 	end
