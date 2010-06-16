@@ -36,8 +36,23 @@ module Traverse
 	# Returns the first descendant node. If an Xpath is provided
 	# it will return the first one that matches.
 	def down(path = nil)
-		descendants = self.descendants(path)
-		descendants.first if not descendants.nil?
+		if self.respond_to? :children and not self.children.empty?
+			# if there's not path then send back the first child
+			if path.nil?
+				self.children.first
+			else
+				nodes = self.children.filter(path)
+				if nodes.empty?
+					self.children.each do |child|
+						node = child.down(path)
+						return node if not node.nil?
+					end
+					nil
+				else
+					nodes.first
+				end
+			end
+		end
 	end
 
 	# Returns the first sibling that follows the current node in

@@ -12,7 +12,7 @@ class TraverseTest < Test::Unit::TestCase
   end
 
   def test_descendants
-    assert_equal(@root.down('c').descendants, [@root.down('d'), @root.down('h'), @root.down('i'), @root.down('e'), @root.down('f'), @root.down('g')])
+    assert_equal(@root.down('c').descendants, [@root.down('d'), @root.down('h'), @root.down('i'), @root.down('e'), @root.down('f'), @root.down('g'), @root.down('j')])
     assert_equal(@root.descendants('f'), [@root.down('f')])
   end
 
