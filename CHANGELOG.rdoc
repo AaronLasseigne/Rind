@@ -1,4 +1,5 @@
 == 0.2.0
+* Optimized traversal functions for better performance.
 
 == 0.1.1 - 2010.06.14
 * Attributes without a value or with a value containing a space broke the parser.
