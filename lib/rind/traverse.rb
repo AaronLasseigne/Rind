@@ -79,8 +79,17 @@ module Traverse
 	# the list of siblings. If an Xpath is provided it will return
 	# the first one that matches.
 	def prev(path = nil)
-		siblings = self.prev_siblings(path)
-		siblings.last
+		children = self.parent.children
+		self_index = children.index(self)
+		if self_index == 0
+			nil
+		elsif path.nil?
+			children[self_index - 1]
+		else
+			0.upto(self_index - 1) do |i|
+				return children[i] if not Rind::Nodes.new([children[i]]).filter(path).empty?
+			end
+		end
 	end
 
 	# Creates a Rind::Nodes list of all siblings that proceed the
