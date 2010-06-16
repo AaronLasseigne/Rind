@@ -11,26 +11,22 @@ module Traverse
 			ancestors.push(node)
 		end
 
-		if ancestors.empty?
-			nil
-		else
-			path.nil? ? ancestors : ancestors.filter(path)
-		end
+		(path.nil? or ancestors.empty?) ? ancestors : ancestors.filter(path)
 	end
 
 	# Creates a Rind::Nodes list of all descendants. If an Xpath
 	# is provided it will only return the nodes that match.
 	def descendants(path = nil)
+		descendants = Rind::Nodes.new()
 		if self.respond_to? :children and not self.children.empty?
-			descendants = Rind::Nodes.new(self.children)
+			descendants.push(*self.children)
 
 			self.children.each do |child|
 				child_descendants = child.descendants
 				descendants.push(*child_descendants) if not child_descendants.nil?
 			end
-
-			path.nil? ? descendants : descendants.filter(path)
 		end
+		(path.nil? or descendants.empty?) ? descendants : descendants.filter(path)
 	end
 
 	# Returns the first descendant node. If an Xpath is provided
@@ -60,7 +56,7 @@ module Traverse
 	# the first one that matches.
 	def next(path = nil)
 		siblings = self.next_siblings(path)
-		siblings.first if not siblings.nil?
+		siblings.first
 	end
 
 	# Creates a Rind::Nodes list of all siblings that follow the
@@ -77,7 +73,7 @@ module Traverse
 	# the first one that matches.
 	def prev(path = nil)
 		siblings = self.prev_siblings(path)
-		siblings.last if not siblings.nil?
+		siblings.last
 	end
 
 	# Creates a Rind::Nodes list of all siblings that proceed the
@@ -100,6 +96,6 @@ module Traverse
 	# it will return the first one that matches.
 	def up(path = nil)
 		ancestors = self.ancestors(path)
-		ancestors.first if not ancestors.nil?
+		ancestors.first
 	end
 end
