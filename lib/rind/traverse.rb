@@ -111,7 +111,15 @@ module Traverse
 	# Returns the first ancestor node. If an Xpath is provided
 	# it will return the first one that matches.
 	def up(path = nil)
-		ancestors = self.ancestors(path)
-		ancestors.first
+		if path.nil?
+			self.parent
+		else
+			node = self
+			while not node.parent.nil?
+				node = node.parent
+				return node if not Rind::Nodes.new([node]).filter(path).empty?
+			end
+			nil
+		end
 	end
 end
