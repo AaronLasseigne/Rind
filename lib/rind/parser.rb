@@ -15,7 +15,7 @@ module Rind
 		content = File.read(file_name)
 
 		# tag types
-		name = /[a-zA-Z_]/
+		name = /[a-zA-Z_0-9]/
 		cdata = /<!\[CDATA\[(.*?)\]\]>/m
 		comment = /<!--(.*?)-->/m
 		doctype = /<!DOCTYPE(.*?)>/m
