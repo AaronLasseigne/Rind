@@ -20,13 +20,20 @@ module Rind
 		comment = /<!--(.*?)-->/m
 		doctype = /<!DOCTYPE(.*?)>/m
 		processing_instruction = /<\?(.*?)>/m
+		full_tag = /<\s*(script|style)\s*(.*?)>(.*?)<\s*\/\s*\5\s*>/m
 		end_tag = /<\s*\/\s*((?:#{name}+:)?#{name}+)\s*>/m
-		start_tag = /<\s*((?:#{name}+:)?#{name}+)\s*(.*?)?\/?>/m
+		start_tag = /<\s*((?:#{name}+:)?#{name}+)\s*(.*?)\/?\s*>/m
+
+		if type == 'html'
+			scan_regex = /#{cdata}|#{comment}|#{doctype}|#{processing_instruction}|#{full_tag}|#{end_tag}|#{start_tag}/o
+		else # xml
+			scan_regex = /#{cdata}|#{comment}|#{doctype}|#{processing_instruction}|#{end_tag}|#{start_tag}/o
+		end
 
 		# extract tokens from the file content
 		tokens = Array.new
 		text_start = 0
-		content.scan(/#{cdata}|#{comment}|#{doctype}|#{processing_instruction}|#{end_tag}|#{start_tag}/o) do |token|
+		content.scan(scan_regex) do |token|
 			# remove nil entries from the unmatched tag checks
 			token.compact!
 			# get match object
@@ -41,17 +48,42 @@ module Rind
 			text_start = match.end(0)
 
 			# create a token for the appropriate tag
-			if match.begin(1) # cdata
+			if match.begin(1)
 				tokens.push([CDATA, token].flatten)
-			elsif match.begin(2) # comment
+			elsif match.begin(2)
 				tokens.push([COMMENT, token].flatten)
-			elsif match.begin(3) # doctype tag
+			elsif match.begin(3)
 				tokens.push([DOCTYPE, token].flatten)
-			elsif match.begin(4) # processing instruction
+			elsif match.begin(4)
 				tokens.push([PRO_INST, token].flatten)
-			elsif match.begin(5) # end tag
+			# from here things vary a little
+			#
+			# html => full tag = 5, end tag = 8, start tag = 9
+			# xml => end tag = 5, start tag = 6
+			elsif match.begin(5)
+				if type == 'html'
+					if token[2].nil?
+						attr = nil
+						text = token[1]
+					else
+						attr = token[1]
+						text = token[2]
+					end
+					tokens.push([START_TAG, token[0], attr])
+					if text.sub!(/\A\s*#{comment}\s*\z/o, '\1')
+						tokens.push([COMMENT, text])
+					elsif text !~ /\A\s*\z/
+						tokens.push([TEXT, text])
+					end
+					tokens.push([END_TAG, token[0]])
+				else
+					tokens.push([END_TAG, token].flatten)
+				end
+			elsif match.begin(6)
+				tokens.push([START_TAG, token].flatten)
+			elsif match.begin(8)
 				tokens.push([END_TAG, token].flatten)
-			elsif match.begin(6) # start tag
+			elsif match.begin(9)
 				tokens.push([START_TAG, token].flatten)
 			end
 		end
