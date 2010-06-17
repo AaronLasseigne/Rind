@@ -15,14 +15,13 @@ module Rind
 		content = File.read(file_name)
 
 		# tag types
-		name = /[a-zA-Z_0-9]/
 		cdata = /<!\[CDATA\[(.*?)\]\]>/m
 		comment = /<!--(.*?)-->/m
 		doctype = /<!DOCTYPE(.*?)>/m
 		processing_instruction = /<\?(.*?)>/m
 		full_tag = /<\s*(script|style)\s*(.*?)>(.*?)<\s*\/\s*\5\s*>/m
-		end_tag = /<\s*\/\s*((?:#{name}+:)?#{name}+)\s*>/m
-		start_tag = /<\s*((?:#{name}+:)?#{name}+)\s*(.*?)\/?\s*>/m
+		end_tag = /<\s*\/\s*((?:\w+:)?\w+)\s*>/m
+		start_tag = /<\s*((?:\w+:)?\w+)\s*(.*?)\/?\s*>/m
 
 		if type == 'html'
 			scan_regex = /#{cdata}|#{comment}|#{doctype}|#{processing_instruction}|#{full_tag}|#{end_tag}|#{start_tag}/o
