@@ -57,6 +57,11 @@ module Rind
 	end
 
 	class ProcessingInstruction
+		include Equality
+		include Manipulate
+		include Traverse
+		include Xpath
+
 		# Create a processing instruction with
 		# +content+ holding the character data.
 		def initialize(content)
