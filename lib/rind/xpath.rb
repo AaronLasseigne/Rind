@@ -77,7 +77,7 @@ module Xpath
 		when 'attribute'
 			'*' == node_test ? self[] : self[node_test] || []
 		when 'child'
-			self.respond_to?(:children) ? self.children.find_all{|node| node.is_matching_node?(node_test)} : []
+			self.is_leaf? ? [] : self.children.find_all{|node| node.is_matching_node?(node_test)}
 		when 'descendant'
 			self.descendants.find_all{|node| node.is_matching_node?(node_test)}
 		when 'descendant-or-self'

@@ -16,7 +16,7 @@ module Traverse
 	# is provided it will only return the nodes that match.
 	def descendants(path = nil)
 		descendants = Rind::Nodes.new()
-		if self.respond_to? :children and not self.children.empty?
+		if not self.is_leaf?
 			descendants.push(*self.children)
 
 			self.children.each do |child|
@@ -30,7 +30,7 @@ module Traverse
 	# Returns the first descendant node. If an Xpath is provided
 	# it will return the first one that matches.
 	def down(path = nil)
-		if self.respond_to? :children and not self.children.empty?
+		if not self.is_leaf?
 			# if there's not path then send back the first child
 			if path.nil?
 				self.children.first
