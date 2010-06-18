@@ -1,5 +1,6 @@
 == 0.2.0
 * Optimized traversal functions for better performance.
+* Added is_root? and is_leaf? functions for nodes.
 
 == 0.1.2 - 2010.06.17
 * When parsing HTML, script and style tags will not break because of a "<" in their content.
