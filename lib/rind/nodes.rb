@@ -45,6 +45,8 @@ module Rind
 	end
 
 	class DocType
+		include Equality
+
 		# Create a Document Type Declaration with
 		# +content+ holding the DTD identifiers.
 		def initialize(content)
