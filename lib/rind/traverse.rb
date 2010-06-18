@@ -1,6 +1,4 @@
 module Traverse
-	attr_accessor :parent
-
 	# Creates a Rind::Nodes list of all ancestors. If an Xpath
 	# is provided it will only return the nodes that match.
 	def ancestors(path = nil)

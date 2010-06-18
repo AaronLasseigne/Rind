@@ -36,11 +36,6 @@ class TraverseTest < Test::Unit::TestCase
 		assert_equal(@root.down.next_siblings, [])
   end
 
-  def test_parent
-    assert_same(@root.down.parent, @root)
-		assert_nil(@root.parent)
-  end
-
   def test_prev
     assert_same(@root.down('f').prev, @root.down('e'))
     assert_same(@root.down('g').prev('e'), @root.down('e'))
