@@ -12,9 +12,7 @@ module Rind
 
 	class Cdata
 		include Equality
-		include Manipulate
-		include Traverse
-		include Xpath
+		include Node
 
 		# Create a CDATA with <tt>content</tt> holding
 		# the character data to contain.
@@ -29,9 +27,7 @@ module Rind
 
 	class Comment
 		include Equality
-		include Manipulate
-		include Traverse
-		include Xpath
+		include Node
 
 		# Create a comment with <tt>content</tt> holding
 		# the character data of the comment.
@@ -70,9 +66,7 @@ module Rind
 
 	class Element
 		include Equality
-		include Manipulate
-		include Traverse
-		include Xpath
+		include Node
 
 		attr_reader :children, :local_name, :namespace_name
 		alias :name :local_name
@@ -227,8 +221,6 @@ module Rind
 	end
 
 	class Text < String
-		include Manipulate
-		include Traverse
-		include Xpath
+		include Node
 	end
 end
