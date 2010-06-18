@@ -14,6 +14,7 @@ class XpathTest < Test::Unit::TestCase
 
 		# attribute tests
 		assert_equal(@p_one.s('br[@class="1"]'), [@br_one])
+		assert_equal(@p_one.s('br[@class]'), [@br_one, @br_two])
 
 		# position tests
 		assert_equal(@p_one.s('br[2]'), [@br_two])
