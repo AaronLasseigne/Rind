@@ -12,5 +12,6 @@ class NodesTest < Test::Unit::TestCase
 
 	def test_filter
 		assert_equal(@nodes.filter('br'), [@br_one, @br_two])
+		assert_equal(@nodes.filter('a'), [])
 	end
 end
