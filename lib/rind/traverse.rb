@@ -49,7 +49,7 @@ module Traverse
 	# it will only return the nodes that match.
 	def next_siblings(path = nil)
 		children = self.parent.children
-		siblings = Rind::Nodes.new(children[children.index(self)+1..children.length-1])
+		siblings = Rind::Nodes.new(children[children.exact_index(self)+1..children.length-1])
 		path.nil? ? siblings : siblings.filter(path)
 	end
 
@@ -66,7 +66,7 @@ module Traverse
 	# it will only return the nodes that match.
 	def prev_siblings(path = nil)
 		children = self.parent.children
-		siblings = Rind::Nodes.new(children[0...children.index(self)])
+		siblings = Rind::Nodes.new(children[0...children.exact_index(self)])
 		path.nil? ? siblings : siblings.filter(path)
 	end
 

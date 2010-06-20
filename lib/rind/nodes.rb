@@ -1,5 +1,13 @@
 module Rind
 	class Nodes < Array
+		# Returns the index of the first object in +self+ such that it is equal? to the node.
+		def exact_index(node)
+			self.each_index do |index|
+				return index if self[index].equal?(node)
+			end
+			nil
+		end
+
 		# Return only the nodes that match the Xpath provided.
 		def filter(path)
 			# if the path doesn't have an axis then default to "self"

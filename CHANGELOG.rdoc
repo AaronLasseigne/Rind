@@ -2,6 +2,8 @@
 * The Xpath function 's' will return an empty Rind::Node rather than +nil+.
 * Processing instructions were not being treated as nodes.
 * DocType nodes were lacking proper equality checks.
+* The +next+, +next_sibling+, +prev+ and +prev_sibling+ functions were not returning the correct nodes when other available nodes matched +==+.
+* Adding +exact_index+ function to Rind::Nodes. (used in previous bug fix)
 
 == 0.1.2 - 2010.06.17
 * When parsing HTML, script and style tags will not break because of a "<" in their content.
