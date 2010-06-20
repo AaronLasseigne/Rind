@@ -2,7 +2,7 @@
 * The Xpath function 's' will return an empty Rind::Node rather than +nil+.
 * Processing instructions were not being treated as nodes.
 * DocType nodes were lacking proper equality checks.
-* The +next+, +next_sibling+, +prev+ and +prev_sibling+ functions were not returning the correct nodes when other available nodes matched +==+.
+* The +next+, +next_sibling+, +prev+ and +prev_sibling+ functions were not returning the correct nodes when other available nodes matched <tt>==</tt>.
 * Adding +exact_index+ function to Rind::Nodes. (used in previous bug fix)
 
 == 0.1.2 - 2010.06.17
