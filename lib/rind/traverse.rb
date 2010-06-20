@@ -54,7 +54,7 @@ module Traverse
 	# the first one that matches.
 	def next(path = nil)
 		children = self.parent.children
-		self_index = children.index(self)
+		self_index = children.exact_index(self)
 		if path.nil?
 			children[self_index + 1]
 		else
@@ -78,7 +78,7 @@ module Traverse
 	# the first one that matches.
 	def prev(path = nil)
 		children = self.parent.children
-		self_index = children.index(self)
+		self_index = children.exact_index(self)
 		if self_index == 0
 			nil
 		elsif path.nil?
