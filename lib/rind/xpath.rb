@@ -56,7 +56,7 @@ module Xpath
 				end
 			end
 
-			return nil if nodes.empty?
+			return Rind::Nodes.new if nodes.empty?
 		end
 
 		Rind::Nodes.new(nodes)
@@ -64,8 +64,7 @@ module Xpath
 
 	# Xpath search returning only the first matching node in the list.
 	def sf(path)
-		nodes = self.s(path)
-		nodes.nil? ? nil : nodes.first
+		self.s(path).first
 	end
 
 	def find_matching_nodes(axis, node_test) # :nodoc:

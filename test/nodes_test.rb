@@ -10,7 +10,15 @@ class NodesTest < Test::Unit::TestCase
 		@nodes = Rind::Nodes.new([@p_one, @p_two, @br_one, @br_two])
 	end
 
+	def test_exact_index
+		foo = Rind::Html::Foo.new
+
+		assert_equal(@nodes.exact_index(@p_two), 1)
+		assert_nil(@nodes.exact_index(foo))
+	end
+
 	def test_filter
 		assert_equal(@nodes.filter('br'), [@br_one, @br_two])
+		assert_equal(@nodes.filter('a'), [])
 	end
 end

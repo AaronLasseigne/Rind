@@ -1,12 +1,20 @@
 module Rind
 	class Nodes < Array
+		# Returns the index of the first object in +self+ such that it is equal? to the node.
+		def exact_index(node)
+			self.each_index do |index|
+				return index if self[index].equal?(node)
+			end
+			nil
+		end
+
 		# Return only the nodes that match the Xpath provided.
 		def filter(path)
 			# if the path doesn't have an axis then default to "self"
 			if path !~ /^([.\/]|(.+?::))/
 				path = "self::#{path}"
 			end
-			Nodes.new(self.find_all{|node| node.s(path)})
+			Nodes.new(self.find_all{|node| not node.s(path).empty?})
 		end
 	end
 
@@ -41,6 +49,8 @@ module Rind
 	end
 
 	class DocType
+		include Equality
+
 		# Create a Document Type Declaration with
 		# +content+ holding the DTD identifiers.
 		def initialize(content)
@@ -53,6 +63,11 @@ module Rind
 	end
 
 	class ProcessingInstruction
+		include Equality
+		include Manipulate
+		include Traverse
+		include Xpath
+
 		# Create a processing instruction with
 		# +content+ holding the character data.
 		def initialize(content)

@@ -20,9 +20,12 @@ class XpathTest < Test::Unit::TestCase
 		assert_equal(@p_one.s('br[2]'), [@br_two])
 		assert_equal(@p_one.s('br[position()=1]'), [@br_one])
 		assert_equal(@p_one.s('br[last()]'), [@br_three])
+
+		assert_equal(@p_one.s('a'), [])
   end
 
 	def test_sf
 		assert_same(@p_one.sf('br'), @br_one)
+		assert_nil(@p_one.sf('a'))
 	end
 end
