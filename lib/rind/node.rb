@@ -7,15 +7,11 @@ module Node
 
 	# Returns true is the node has no children.
 	def is_leaf?
-		if self.respond_to? :children
-			self.children.empty? ? true : false
-		else
-			true
-		end
+		not self.respond_to? :children or self.children.empty?
 	end
 
 	# Returns true if the node is the topmost node.
 	def is_root?
-		self.parent.nil? ? true : false
+		self.parent.nil?
 	end
 end
