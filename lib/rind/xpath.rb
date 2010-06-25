@@ -8,11 +8,11 @@ module Xpath
 
 		# absolute paths to the top
 		if '/' == path[0,1]
-			while not node.parent.nil?
+			while not node.is_root?
 				node = node.parent
 			end
-			if 1 < path.length and '/' == path[1,1]
-				path[0] = ''
+			if '/' == path[1,1]
+				path[0,2] = 'descendant-or-self::'
 			else
 				path[0] = 'self::'
 			end
