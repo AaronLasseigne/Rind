@@ -101,15 +101,15 @@ module Xpath
 	def xpath_is_matching_node?(node_test) # :nodoc:
 		case node_test
 		when '*'
-			self.is_a?(Rind::Text) ? false : true
+			not self.is_a?(Rind::Text)
 		when 'comment()'
-			self.is_a?(Rind::Comment) ? true : false
+			self.is_a?(Rind::Comment)
 		when 'node()'
 			true
 		when 'processing-instruction()'
-			self.is_a?(Rind::ProcessingInstruction) ? true : false
+			self.is_a?(Rind::ProcessingInstruction)
 		when 'text()'
-			self.is_a?(Rind::Text) ? true : false
+			self.is_a?(Rind::Text)
 		else
 			if self.is_a?(Rind::Element)
 				if self.namespace_name == 'rind:html' and self.local_name == node_test
