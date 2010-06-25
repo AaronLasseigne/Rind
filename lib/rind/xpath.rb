@@ -37,7 +37,8 @@ module Xpath
 			axis = 'child' if axis.nil?
 
 			# find matching nodes
-			nodes = nodes.collect{|node| node.find_matching_nodes(axis, node_test)}.flatten.compact
+			nodes.collect!{|node| node.find_matching_nodes(axis, node_test)}.flatten!
+			nodes.compact!
 
 			# check predicates
 			if not predicates.nil?
