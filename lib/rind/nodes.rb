@@ -9,13 +9,14 @@ module Rind
 		end
 
 		# Return only the nodes that match the Xpath provided.
-		def filter(path)
+		def xpath_filter(path)
 			# if the path doesn't have an axis then default to "self"
 			if path !~ /^([.\/]|(.+?::))/
 				path = "self::#{path}"
 			end
-			Nodes[*self.find_all{|node| not node.s(path).empty?}]
+			Nodes[*self.find_all{|node| not node.xs(path).empty?}]
 		end
+		alias :xf :xpath_filter
 	end
 
 	class Cdata

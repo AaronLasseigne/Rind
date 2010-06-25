@@ -69,13 +69,15 @@ module Rind
 		end
 
 		# Xpath search of the root node that returns a list of matching nodes.
-		def s(path)
-			root.s(path)
+		def xpath_search(path)
+			root.xs(path)
 		end
+		alias :xs :xpath_search
 
 		# Xpath search returning only the first matching node in the list.
-		def sf(path)
-			root.sf(path)
+		def xpath_search_first(path)
+			root.xsf(path)
 		end
+		alias :xsf :xpath_search_first
 	end
 end

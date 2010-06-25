@@ -20,7 +20,7 @@ about what's done.
   doc = Rind::Document.new('index.html')
 
   # Xpath search for the the title and add some text.
-  doc.sf('/html/head/title').children.push('Hello World')
+  doc.xsf('/html/head/title').children.push('Hello World')
 
   # Send it out the door.
   puts doc.render!
@@ -54,7 +54,7 @@ App devs treat it like an object.
   require 'images'
 
   doc = Rind::Document.new('index.html')
-  doc.sf('/html/body/images:gallery').path_to_images = '/home/me/photos'
+  doc.xsf('/html/body/images:gallery').path_to_images = '/home/me/photos'
   puts doc.render!
 
 Web devs treat it like a tag.

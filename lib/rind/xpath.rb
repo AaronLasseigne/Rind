@@ -3,7 +3,7 @@
 # but that should cover most of the needed functionality.
 module Xpath
 	# Xpath search of a node that returns a list of matching nodes.
-	def s(path)
+	def xpath_search(path)
 		node = self;
 
 		# absolute paths to the top
@@ -37,7 +37,7 @@ module Xpath
 			axis = 'child' if axis.nil?
 
 			# find matching nodes
-			nodes.collect!{|node| node.find_matching_nodes(axis, node_test)}.flatten!
+			nodes.collect!{|node| node.xpath_find_matching_nodes(axis, node_test)}.flatten!
 			nodes.compact!
 
 			# check predicates
@@ -52,7 +52,7 @@ module Xpath
 					# last()
 					predicate.gsub!(/last\(\)/, nodes.length.to_s)
 
-					nodes = nodes.find_all{|node| node.validate_predicate(predicate.clone, nodes.index(node)+1)}
+					nodes = nodes.find_all{|node| node.xpath_validate_predicate(predicate.clone, nodes.index(node)+1)}
 					break if nodes.empty?
 				end
 			end
@@ -62,41 +62,43 @@ module Xpath
 
 		Rind::Nodes[*nodes]
 	end
+	alias :xs :xpath_search
 
 	# Xpath search returning only the first matching node in the list.
-	def sf(path)
-		self.s(path).first
+	def xpath_search_first(path)
+		self.xs(path).first
 	end
+	alias :xsf :xpath_search_first
 
-	def find_matching_nodes(axis, node_test) # :nodoc:
+	def xpath_find_matching_nodes(axis, node_test) # :nodoc:
 		case axis
 		when 'ancestor'
-			self.ancestors.find_all{|node| node.is_matching_node?(node_test)}
+			self.ancestors.find_all{|node| node.xpath_is_matching_node?(node_test)}
 		when 'ancestor-or-self'
-			self.find_matching_nodes('self', node_test) + self.find_matching_nodes('ancestor', node_test)
+			self.xpath_find_matching_nodes('self', node_test) + self.xpath_find_matching_nodes('ancestor', node_test)
 		when 'attribute'
 			'*' == node_test ? self[] : self[node_test] || []
 		when 'child'
-			self.is_leaf? ? [] : self.children.find_all{|node| node.is_matching_node?(node_test)}
+			self.is_leaf? ? [] : self.children.find_all{|node| node.xpath_is_matching_node?(node_test)}
 		when 'descendant'
-			self.descendants.find_all{|node| node.is_matching_node?(node_test)}
+			self.descendants.find_all{|node| node.xpath_is_matching_node?(node_test)}
 		when 'descendant-or-self'
-			self.find_matching_nodes('self', node_test) + self.find_matching_nodes('descendant', node_test)
+			self.xpath_find_matching_nodes('self', node_test) + self.xpath_find_matching_nodes('descendant', node_test)
 		when 'following-sibling'
-			self.next_siblings.find_all{|node| node.is_matching_node?(node_test)}
+			self.next_siblings.find_all{|node| node.xpath_is_matching_node?(node_test)}
 		when 'parent'
-			self.parent.is_matching_node?(node_test) ? [self.parent] : []
+			self.parent.xpath_is_matching_node?(node_test) ? [self.parent] : []
 		when 'preceding-sibling'
-			self.prev_siblings.find_all{|node| node.is_matching_node?(node_test)}
+			self.prev_siblings.find_all{|node| node.xpath_is_matching_node?(node_test)}
 		when 'self'
-			self.is_matching_node?(node_test) ? [self] : []
+			self.xpath_is_matching_node?(node_test) ? [self] : []
 		else
 			raise "Invalid axis: #{axis}"
 		end
 	end
-	protected :find_matching_nodes
+	protected :xpath_find_matching_nodes
 
-	def is_matching_node?(node_test) # :nodoc:
+	def xpath_is_matching_node?(node_test) # :nodoc:
 		case node_test
 		when '*'
 			self.is_a?(Rind::Text) ? false : true
@@ -120,9 +122,9 @@ module Xpath
 			end
 		end
 	end
-	protected :is_matching_node?
+	protected :xpath_is_matching_node?
 
-	def validate_predicate(predicate, position) # :nodoc:
+	def xpath_validate_predicate(predicate, position) # :nodoc:
 		# attribute replacement
 		predicate.gsub!(/@([0-9a-zA-Z]+)/){self.respond_to?(:[]) ? "self[:#{$1}]" : 'nil'}
 		# position()
@@ -136,5 +138,5 @@ module Xpath
 			valid
 		end
 	end
-	protected :validate_predicate
+	protected :xpath_validate_predicate
 end
