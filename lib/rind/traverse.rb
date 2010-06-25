@@ -3,7 +3,7 @@ module Traverse
 	# is provided it will only return the nodes that match.
 	def ancestors(path = nil)
 		node = self
-		ancestors = Rind::Nodes.new()
+		ancestors = Rind::Nodes[]
 		while not node.parent.nil?
 			node = node.parent
 			ancestors.push(node)
@@ -15,7 +15,7 @@ module Traverse
 	# Creates a Rind::Nodes list of all descendants. If an Xpath
 	# is provided it will only return the nodes that match.
 	def descendants(path = nil)
-		descendants = Rind::Nodes.new()
+		descendants = Rind::Nodes[]
 		if not self.is_leaf?
 			descendants.push(*self.children)
 
@@ -59,7 +59,7 @@ module Traverse
 			children[self_index + 1]
 		else
 			(self_index + 1).upto(children.length) do |i|
-				return children[i] if not Rind::Nodes.new([children[i]]).filter(path).empty?
+				return children[i] if not Rind::Nodes[children[i]].filter(path).empty?
 			end
 		end
 	end
@@ -69,7 +69,7 @@ module Traverse
 	# it will only return the nodes that match.
 	def next_siblings(path = nil)
 		children = self.parent.children
-		siblings = Rind::Nodes.new(children[children.exact_index(self)+1..children.length-1])
+		siblings = Rind::Nodes[*children[children.exact_index(self)+1..children.length-1]]
 		path.nil? ? siblings : siblings.filter(path)
 	end
 
@@ -85,7 +85,7 @@ module Traverse
 			children[self_index - 1]
 		else
 			0.upto(self_index - 1) do |i|
-				return children[i] if not Rind::Nodes.new([children[i]]).filter(path).empty?
+				return children[i] if not Rind::Nodes[children[i]].filter(path).empty?
 			end
 		end
 	end
@@ -95,14 +95,14 @@ module Traverse
 	# it will only return the nodes that match.
 	def prev_siblings(path = nil)
 		children = self.parent.children
-		siblings = Rind::Nodes.new(children[0...children.exact_index(self)])
+		siblings = Rind::Nodes[*children[0...children.exact_index(self)]]
 		path.nil? ? siblings : siblings.filter(path)
 	end
 
 	# Creates a Rind::Nodes list of all siblings. If an Xpath is
 	# provided it will only return the nodes that match.
 	def siblings(path = nil)
-		siblings = Rind::Nodes.new(self.parent.children.find_all{|child| not child.equal? self})
+		siblings = Rind::Nodes[*self.parent.children.find_all{|child| not child.equal? self}]
 		path.nil? ? siblings : siblings.filter(path)
 	end
 
@@ -115,7 +115,7 @@ module Traverse
 			node = self
 			while not node.parent.nil?
 				node = node.parent
-				return node if not Rind::Nodes.new([node]).filter(path).empty?
+				return node if not Rind::Nodes[node].filter(path).empty?
 			end
 			nil
 		end

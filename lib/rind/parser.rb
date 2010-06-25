@@ -93,7 +93,7 @@ module Rind
 
 	# tokens will arrive in reverse order
 	def self.create_tree(tokens, type, base_namespace, namespaces_allowed, complete_tag = nil)
-		dom = Rind::Nodes.new
+		dom = Rind::Nodes[]
 
 		# create the nodes and push them onto the dom tree
 		while 0 < tokens.length

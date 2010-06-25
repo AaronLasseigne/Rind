@@ -56,10 +56,10 @@ module Xpath
 				end
 			end
 
-			return Rind::Nodes.new if nodes.empty?
+			return Rind::Nodes[] if nodes.empty?
 		end
 
-		Rind::Nodes.new(nodes)
+		Rind::Nodes[*nodes]
 	end
 
 	# Xpath search returning only the first matching node in the list.

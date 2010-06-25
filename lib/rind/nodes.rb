@@ -14,7 +14,7 @@ module Rind
 			if path !~ /^([.\/]|(.+?::))/
 				path = "self::#{path}"
 			end
-			Nodes.new(self.find_all{|node| not node.s(path).empty?})
+			Nodes[*self.find_all{|node| not node.s(path).empty?}]
 		end
 	end
 
