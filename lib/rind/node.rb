@@ -2,6 +2,7 @@ module Node
 	include Manipulate
 	include Traverse
 	include Xpath
+	include Css
 
 	attr_accessor :parent
 

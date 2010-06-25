@@ -17,7 +17,12 @@ class NodesTest < Test::Unit::TestCase
 		assert_nil(@nodes.exact_index(foo))
 	end
 
-	def test_filter
+	def test_css_filter
+		assert_equal(@nodes.cf('br'), [@br_one, @br_two])
+		assert_equal(@nodes.cf('a'), [])
+	end
+
+	def test_xpath_filter
 		assert_equal(@nodes.xf('br'), [@br_one, @br_two])
 		assert_equal(@nodes.xf('a'), [])
 	end
