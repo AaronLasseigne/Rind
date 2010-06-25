@@ -8,6 +8,13 @@ module Rind
 			nil
 		end
 
+		# Return only the nodes that match the CSS selector provided.
+		def css_filter(path)
+			path = "self::#{path}"
+			Nodes[*self.find_all{|node| not node.cs(path).empty?}]
+		end
+		alias :cf :css_filter
+
 		# Return only the nodes that match the Xpath provided.
 		def xpath_filter(path)
 			# if the path doesn't have an axis then default to "self"
@@ -110,7 +117,7 @@ module Rind
 			@attributes = Hash.new
 			if options[:attributes].is_a? Hash
 				options[:attributes].each do |k,v|
-					@attributes[k.to_s] = v
+					@attributes[k.to_s] = v.to_s
 				end
 			elsif options[:attributes].is_a? String
 				# scan for attr=value|"value1 'value2'"|'"value1" value2' or attr by itself
