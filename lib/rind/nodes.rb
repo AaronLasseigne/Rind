@@ -72,9 +72,7 @@ module Rind
 
 	class ProcessingInstruction
 		include Equality
-		include Manipulate
-		include Traverse
-		include Xpath
+		include Node
 
 		# Create a processing instruction with
 		# +content+ holding the character data.
