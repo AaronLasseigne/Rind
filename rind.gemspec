@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
 	spec.name        = 'rind'
-	spec.version     = '0.1.4'
+	spec.version     = '0.1.5'
 	spec.summary     = 'A templating engine that turns HTML (and XML) into node trees and allows you to create custom tags.'
 	spec.description = 'Rind is a templating engine that turns HTML (and XML) into node trees and allows you to create custom tags or reuse someone else’s genius. Rind gives web devs tags to work with and provides the same thing to app devs as an object. This project is just getting started so watch out for sharp corners and unfinished rooms.'
 
