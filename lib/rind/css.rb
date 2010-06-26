@@ -34,7 +34,7 @@ module Css
 				predicates.scan(/#{predicate_scan}/o) do |predicate|
 					predicate = predicate[0]
 
-					nodes = nodes.find_all{|node| node.css_validate_predicate(predicate.clone)}
+					nodes = nodes.find_all{|node| node.css_validate_predicate(predicate)}
 					break if nodes.empty?
 				end
 			end
