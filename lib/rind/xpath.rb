@@ -11,30 +11,34 @@ module Xpath
 			while not node.parent.nil?
 				node = node.parent
 			end
-			if 1 < path.length and '/' == path[1,1]
-				path[0] = ''
-			else
+			if '/' != path[1,1]
 				path[0] = 'self::'
 			end
 		end
 
 		# node check
 		nodes = [node]
-		path.split('/').each do |step|
-			case step
-			when ''
-				step = 'descendant-or-self::node()'
+		path.scan(%r{(?:^\/?|\/)
+							(?:(.*?)::)?   # axis
+							([^\/\[]+)?    # node test
+							((?:\[.+?\])*) # predicates
+		}x) do |axis, node_test, predicates|
+			case node_test
+			when nil
+				axis = 'descendant-or-self'
+				node_test = 'node()'
 			when '.'
-				step = 'self::node()'
+				axis = 'self'
+				node_test = 'node()'
 			when '..'
-				step = 'parent::node()'
+				axis = 'parent'
+				node_test = 'node()'
 			end
 
-			step.gsub!(/^@/, 'attribute::')
-
-			step =~ /^(?:(.*?)::)?(.+?)(\[.*?)?$/
-			axis, node_test, predicates = $1, $2, $3
 			axis = 'child' if axis.nil?
+
+			node_test.gsub!(/^@/, 'attribute::')
+			predicates.gsub!(/^@/, 'attribute::')
 
 			# find matching nodes
 			nodes = nodes.collect{|node| node.find_matching_nodes(axis, node_test)}.flatten.compact

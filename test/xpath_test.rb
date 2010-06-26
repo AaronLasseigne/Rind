@@ -3,28 +3,47 @@ require 'rind'
 
 class XpathTest < Test::Unit::TestCase
 	def setup
-		@br_one = Rind::Html::Br.new(:attributes => {:id => 'br_one', :class => '1'})
-		@br_two = Rind::Html::Br.new(:attributes => {:id => 'br_two', :class => '2'})
-		@br_three = Rind::Html::Br.new()
-		@p_one = Rind::Html::P.new(:attributes => {:class => '1'}, :children => [@br_one, @br_two, @br_three])
+		@a = Rind::Html::A.new
+		@b1 = Rind::Html::B.new(:attributes => {:id => '1', :class => '1'})
+		@b2 = Rind::Html::B.new(:attributes => {:id => '2', :class => '2'})
+		@b3 = Rind::Html::B.new(:attributes => {:id => '3'})
+		@c1 = Rind::Html::C.new(:attributes => {:id => '1', :type => 'text/css'})
+		@c2 = Rind::Html::C.new(:attributes => {:id => '2'})
+		@b1.children.push(@c1)
+		@b2.children.push(@c2)
+		@a.children.push(@b1, @b2, @b3)
 	end
 
   def test_s
-		assert_equal(@p_one.s('br'), [@br_one, @br_two, @br_three])
+		assert_equal(@a.s('b'), [@b1, @b2, @b3])
 
-		# attribute tests
-		assert_equal(@p_one.s('br[@class="1"]'), [@br_one])
+		assert_equal(@c1.s('/a'), [@a])
 
-		# position tests
-		assert_equal(@p_one.s('br[2]'), [@br_two])
-		assert_equal(@p_one.s('br[position()=1]'), [@br_one])
-		assert_equal(@p_one.s('br[last()]'), [@br_three])
+		assert_equal(@a.s('//c'), [@c1, @c2])
 
-		assert_equal(@p_one.s('a'), [])
+		assert_equal(@c2.s('..'), [@b2] )
+
+		assert_equal(@c2.s('.'), [@c2] )
+
+		assert_equal(@a.s('foo'), [])
   end
 
+	def test_s_attribute
+		assert_equal(@a.s('b[@class="1"]'), [@b1])
+
+		assert_equal(@a.s('//c[@type="text/css"]'), [@c1])
+	end
+
+	def test_s_position
+		assert_equal(@a.s('b[2]'), [@b2])
+
+		assert_equal(@a.s('b[position()=1]'), [@b1])
+
+		assert_equal(@a.s('b[last()]'), [@b3])
+	end
+
 	def test_sf
-		assert_same(@p_one.sf('br'), @br_one)
-		assert_nil(@p_one.sf('a'))
+		assert_same(@a.sf('b'), @b1)
+		assert_nil(@a.sf('foo'))
 	end
 end
