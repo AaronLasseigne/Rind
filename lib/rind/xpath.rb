@@ -19,9 +19,9 @@ module Xpath
 		# node check
 		nodes = [node]
 		path.scan(%r{(?:^\/?|\/)
-							(?:(.*?)::)?   # axis
-							([^\/\[]+)?    # node test
-							((?:\[.+?\])*) # predicates
+							(?:([^\/]*?)::)? # axis
+							([^\/\[]+)?      # node test
+							((?:\[.+?\])*)   # predicates
 		}x) do |axis, node_test, predicates|
 			case node_test
 			when nil
