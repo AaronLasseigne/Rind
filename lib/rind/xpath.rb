@@ -4,7 +4,7 @@
 module Xpath
 	# Xpath search of a node that returns a list of matching nodes.
 	def s(path)
-		node = self;
+		node = self
 
 		# absolute paths to the top
 		if '/' == path[0,1]
