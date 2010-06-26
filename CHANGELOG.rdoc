@@ -1,5 +1,6 @@
 == 0.1.5
 * Xpath query parser was not matching leading '//axis::node' correctly. The axis was being parsed as '/axis'.
+* The <tt>parent</tt> axis was not being handled correctly for the root node.
 
 == 0.1.4 - 2010.06.26
 * Xpath searches with attribute values containing a <tt>/</tt>, like <tt>style[@type="text/css"]</tt>, broke the query parser.

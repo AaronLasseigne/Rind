@@ -94,7 +94,7 @@ module Xpath
 		when 'following-sibling'
 			self.next_siblings.find_all{|node| node.is_matching_node?(node_test)}
 		when 'parent'
-			self.parent.is_matching_node?(node_test) ? [self.parent] : []
+			(not self.parent.nil? and self.parent.is_matching_node?(node_test)) ? [self.parent] : []
 		when 'preceding-sibling'
 			self.prev_siblings.find_all{|node| node.is_matching_node?(node_test)}
 		when 'self'
