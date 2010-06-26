@@ -11,6 +11,7 @@ Gem::Specification.new do |spec|
 	spec.test_files = Dir['test/*.rb'] + Dir['test/files/*']
 	spec.files      = Dir['lib/**/*.rb'] + ['README.rdoc', 'LICENSE', 'CHANGELOG.rdoc'] + spec.test_files
 
-	spec.has_rdoc     = true
-	spec.rdoc_options = ["--quiet"]
+	spec.has_rdoc         = true
+	spec.rdoc_options     = ["--quiet"]
+	spec.extra_rdoc_files = ['LICENSE', 'CHANGELOG.rdoc']
 end

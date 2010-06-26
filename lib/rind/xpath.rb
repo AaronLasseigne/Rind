@@ -20,21 +20,27 @@ module Xpath
 
 		# node check
 		nodes = [node]
-		path.split('/').each do |step|
-			case step
-			when ''
-				step = 'descendant-or-self::node()'
+		path.scan(%r{(?:^\/?|\/)
+							(?:(.*?)::)?   # axis
+							([^\/\[]+)?    # node test
+							((?:\[.+?\])*) # predicates
+		}x) do |axis, node_test, predicates|
+			case node_test
+			when nil
+				axis = 'descendant-or-self'
+				node_test = 'node()'
 			when '.'
-				step = 'self::node()'
+				axis = 'self'
+				node_test = 'node()'
 			when '..'
-				step = 'parent::node()'
+				axis = 'parent'
+				node_test = 'node()'
 			end
 
-			step.gsub!(/^@/, 'attribute::')
-
-			step =~ /^(?:(.*?)::)?(.+?)(\[.*?)?$/
-			axis, node_test, predicates = $1, $2, $3
 			axis = 'child' if axis.nil?
+
+			node_test.gsub!(/^@/, 'attribute::')
+			predicates.gsub!(/^@/, 'attribute::')
 
 			# find matching nodes
 			nodes.collect!{|node| node.xpath_find_matching_nodes(axis, node_test)}.flatten!
@@ -52,7 +58,9 @@ module Xpath
 					# last()
 					predicate.gsub!(/last\(\)/, nodes.length.to_s)
 
-					nodes = nodes.find_all{|node| node.xpath_validate_predicate(predicate.clone, nodes.index(node)+1)}
+					nodes = nodes.find_all do |node|
+						node.xpath_validate_predicate(predicate.clone, Rind::Nodes[*nodes].exact_index(node)+1)
+					end
 					break if nodes.empty?
 				end
 			end

@@ -2,12 +2,16 @@
 * Optimized traversal functions for better performance.
 * Added is_root? and is_leaf? functions for nodes.
 
+== 0.1.4 - 2010.06.26
+* Xpath searches with attribute values containing a <tt>/</tt>, like <tt>style[@type="text/css"]</tt>, broke the query parser.
+* The Manipulate::insert_after and Manipulate::insert_before functions and Xpath positions were not returning the correct nodes when other available nodes matched <tt>==</tt>.
+
 == 0.1.3 - 2010.06.20
 * The Xpath function 's' will return an empty Rind::Node rather than +nil+.
 * Processing instructions were not being treated as nodes.
 * DocType nodes were lacking proper equality checks.
-* The +next+, +next_sibling+, +prev+ and +prev_sibling+ functions were not returning the correct nodes when other available nodes matched <tt>==</tt>.
-* Adding +exact_index+ function to Rind::Nodes. (used in previous bug fix)
+* The Traverse::next, Traverse::next_sibling, Traverse::prev and Traverse::prev_sibling functions were not returning the correct nodes when other available nodes matched <tt>==</tt>.
+* Adding exact_index function to Rind::Nodes. (used in previous bug fix)
 
 == 0.1.2 - 2010.06.17
 * When parsing HTML, script and style tags will not break because of a "<" in their content.
