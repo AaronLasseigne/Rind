@@ -41,7 +41,7 @@ module Xpath
 			predicates.gsub!(/^@/, 'attribute::')
 
 			# find matching nodes
-			nodes = nodes.collect{|node| node.find_matching_nodes(axis, node_test)}.flatten.compact
+			nodes = nodes.collect{|node| node.find_matching_nodes(axis, node_test)}.flatten.compact.uniq
 
 			# check predicates
 			if not predicates.nil?
