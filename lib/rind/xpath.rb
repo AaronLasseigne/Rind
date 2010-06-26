@@ -55,7 +55,9 @@ module Xpath
 					# last()
 					predicate.gsub!(/last\(\)/, nodes.length.to_s)
 
-					nodes = nodes.find_all{|node| node.validate_predicate(predicate.clone, nodes.index(node)+1)}
+					nodes = nodes.find_all do |node|
+						node.validate_predicate(predicate.clone, Rind::Nodes[*nodes].exact_index(node)+1)
+					end
 					break if nodes.empty?
 				end
 			end

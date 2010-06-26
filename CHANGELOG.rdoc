@@ -1,5 +1,6 @@
 == 0.1.4
 * Xpath searches with attribute values containing a <tt>/</tt>, like <tt>style[@type="text/css"]</tt>, broke the query parser.
+* The +insert_after+ and +insert_before+ functions and Xpath positions were not returning the correct nodes when other available nodes matched <tt>==</tt>.
 
 == 0.1.3 - 2010.06.20
 * The Xpath function 's' will return an empty Rind::Node rather than +nil+.

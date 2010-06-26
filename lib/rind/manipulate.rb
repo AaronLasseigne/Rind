@@ -7,7 +7,7 @@ module Manipulate
 	#  nodes[0].insert_after('d', 'e') => ['a', 'd', 'e', 'b', 'c']
 	def insert_after(*nodes)
 		children = self.parent.children
-		children.insert(children.index(self)+1, *nodes)
+		children.insert(children.exact_index(self)+1, *nodes)
 	end
 
 	# Calls {Rind::Children::insert}[link:classes/Rind/Children.html#insert]
@@ -17,7 +17,7 @@ module Manipulate
 	#  nodes[2].insert_after('d', 'e') => ['a', 'b', 'd', 'e', 'c']
 	def insert_before(*nodes)
 		children = self.parent.children
-		children.insert(children.index(self), *nodes)
+		children.insert(children.exact_index(self), *nodes)
 	end
 
 	# Calls {Rind::Children::delete}[link:classes/Rind/Children.html#delete]
