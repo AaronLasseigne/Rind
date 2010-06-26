@@ -18,11 +18,12 @@ module Manipulate
 		children.insert(children.exact_index(self), *nodes)
 	end
 
-	# Calls Rind::Children::delete on <tt>self</tt>.
+	# Removes <tt>self</tt> from siblings and returns it.
 	# === Example
 	#  nodes = ['a', 'b', 'c']
-	#  nodes[1].delete => 'b'
+	#  nodes[1].remove => 'b'
+	#  nodes => ['a', 'c']
 	def remove
-		self.parent.children.delete(self)
+		self.parent.children.delete_at(self.parent.children.exact_index(self))
 	end
 end
