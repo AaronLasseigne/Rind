@@ -12,7 +12,7 @@ module Xpath
 				node = node.parent
 			end
 			if '/' == path[1,1]
-				path[0,2] = 'descendant::'
+				path[0,2] = 'descendant::' if path[2..8] == 'child::' or path[2...path.length] !~ /^[a-z-]+::/
 			else
 				path[0] = 'self::'
 			end
