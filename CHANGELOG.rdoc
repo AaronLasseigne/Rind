@@ -1,6 +1,6 @@
 == 0.2.0
 * Optimized traversal functions for better performance.
-* Added is_root? and is_leaf? functions for nodes.
+* Adding Node::is_root?, Node::is_leaf? and Manipulate::replace functions.
 
 == 0.1.5 - 2010.06.27
 * Xpath query parser was not matching leading '//axis::node' correctly. The axis was being parsed as '/axis'.

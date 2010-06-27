@@ -6,7 +6,7 @@ module Manipulate
 	#  nodes[0].insert_after('d', 'e') => ['a', 'd', 'e', 'b', 'c']
 	def insert_after(*nodes)
 		children = self.parent.children
-		children.insert(children.exact_index(self)+1, *nodes)
+		children.insert(children.exact_index(self) + 1, *nodes)
 	end
 
 	# Calls Rind::Children::insert to add nodes before <tt>self</tt>.
@@ -25,5 +25,16 @@ module Manipulate
 	#  nodes => ['a', 'c']
 	def remove
 		self.parent.children.delete_at(self.parent.children.exact_index(self))
+	end
+
+	# Replace <tt>self</tt> with new nodes.
+	# === Example
+	#  nodes = ['a', 'b', 'c']
+	#  nodes[1].replace('y', 'z') => ['a', 'y', 'z', 'c']
+	def replace(*nodes)
+		children = self.parent.children
+		index = children.exact_index(self)
+		children.delete_at(index)
+		children.insert(index, *nodes)
 	end
 end
