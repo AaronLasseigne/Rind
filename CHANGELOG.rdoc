@@ -2,6 +2,12 @@
 * Optimized traversal functions for better performance.
 * Added is_root? and is_leaf? functions for nodes.
 
+== 0.1.5 - 2010.06.27
+* Xpath query parser was not matching leading '//axis::node' correctly. The axis was being parsed as '/axis'.
+* The <tt>parent</tt> axis was not being handled correctly for the root node.
+* Xpath queries were returning node-sets that contained duplicate nodes.
+* The Manipulate::remove function was not removing only the selected node. All nodes that matched <tt>==</tt> were being returned.
+
 == 0.1.4 - 2010.06.26
 * Xpath searches with attribute values containing a <tt>/</tt>, like <tt>style[@type="text/css"]</tt>, broke the query parser.
 * The Manipulate::insert_after and Manipulate::insert_before functions and Xpath positions were not returning the correct nodes when other available nodes matched <tt>==</tt>.

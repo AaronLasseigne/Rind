@@ -23,6 +23,7 @@ class XpathTest < Test::Unit::TestCase
 		assert_equal(@c1.xs('/a'), [@a])
 
 		assert_equal(@a.xs('//c'), [@c1, @c2, @c3])
+		assert_equal(@a.xs('//parent::b/c'), [@c1, @c2, @c3])
 
 		assert_equal(@c2.xs('..'), [@b2] )
 

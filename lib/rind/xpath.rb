@@ -21,9 +21,9 @@ module Xpath
 		# node check
 		nodes = [node]
 		path.scan(%r{(?:^\/?|\/)
-							(?:(.*?)::)?   # axis
-							([^\/\[]+)?    # node test
-							((?:\[.+?\])*) # predicates
+							(?:([^\/]*?)::)? # axis
+							([^\/\[]+)?      # node test
+							((?:\[.+?\])*)   # predicates
 		}x) do |axis, node_test, predicates|
 			case node_test
 			when nil
@@ -45,6 +45,7 @@ module Xpath
 			# find matching nodes
 			nodes.collect!{|node| node.xpath_find_matching_nodes(axis, node_test)}.flatten!
 			nodes.compact!
+			nodes.uniq!
 
 			# check predicates
 			if not predicates.nil?
@@ -95,7 +96,7 @@ module Xpath
 		when 'following-sibling'
 			self.next_siblings.find_all{|node| node.xpath_is_matching_node?(node_test)}
 		when 'parent'
-			self.parent.xpath_is_matching_node?(node_test) ? [self.parent] : []
+			(not self.is_root? and self.parent.xpath_is_matching_node?(node_test)) ? [self.parent] : []
 		when 'preceding-sibling'
 			self.prev_siblings.find_all{|node| node.xpath_is_matching_node?(node_test)}
 		when 'self'

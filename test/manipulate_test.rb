@@ -19,6 +19,6 @@ class ManipulateTest < Test::Unit::TestCase
 
 	def test_remove
 		assert_equal(@a.children[1].remove, @b2)
-		assert(@a.children.empty?)
+		assert_equal(@a.children, [@b1])
 	end
 end
