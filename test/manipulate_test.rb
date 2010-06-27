@@ -29,4 +29,14 @@ class ManipulateTest < Test::Unit::TestCase
 
 		assert_equal(@a.children[0].replace(c1, c2), [c1, c2, @b2, @b3])
 	end
+
+	def test_swap
+		z = Rind::Html::Z.new()
+		y1 = Rind::Html::Y.new()
+		y2 = Rind::Html::Y.new()
+		z.children.push(y1, y2)
+
+		assert_equal(@a.children[1].swap(y2), [@b1, y2, @b3])
+		assert_equal(z.children, [y1, @b2])
+	end
 end

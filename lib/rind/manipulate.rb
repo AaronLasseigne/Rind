@@ -33,8 +33,35 @@ module Manipulate
 	#  nodes[1].replace('y', 'z') => ['a', 'y', 'z', 'c']
 	def replace(*nodes)
 		children = self.parent.children
+
 		index = children.exact_index(self)
 		children.delete_at(index)
+
 		children.insert(index, *nodes)
+	end
+
+	# Swap <tt>self</tt> from one node set with a <tt>node</tt> from another node set.
+	# === Example
+	#  nodes = ['a', 'b', 'c']
+	#  nodes[1].swap('d') => ['a', 'd', 'c']
+	#
+	#  abc = ['a', 'b', 'c']
+	#  xyz = ['x', 'y', 'z']
+	#  abc[1].swap(xyz[1]) => ['a', 'y', 'c']
+	#  xyz => ['x', 'b', 'z']
+	def swap(node)
+		self_children = self.parent.children
+		node_children = node.parent.children
+
+		self_index = self_children.exact_index(self)
+		node_index = node_children.exact_index(node)
+
+		self_children.delete_at(self_index)
+		node_children.delete_at(node_index)
+
+		self_children.insert(self_index, node)
+		node_children.insert(node_index, self)
+
+		self_children
 	end
 end
