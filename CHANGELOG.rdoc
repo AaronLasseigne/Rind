@@ -1,4 +1,4 @@
-== 0.1.5 - 2010.06.26
+== 0.1.5 - 2010.06.27
 * Xpath query parser was not matching leading '//axis::node' correctly. The axis was being parsed as '/axis'.
 * The <tt>parent</tt> axis was not being handled correctly for the root node.
 * Xpath queries were returning node-sets that contained duplicate nodes.
