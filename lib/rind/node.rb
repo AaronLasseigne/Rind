@@ -6,7 +6,7 @@ module Node
 
 	attr_accessor :parent
 
-	# Returns true is the node has no children.
+	# Returns true if the node has no children.
 	def is_leaf?
 		not self.respond_to? :children or self.children.empty?
 	end
