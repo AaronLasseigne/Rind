@@ -184,7 +184,6 @@ module Rind
 	# remove the association to the parent node. Functions like "push"
 	# will automatically associate the nodes to the parent.
 	class Children < Nodes
-		include Enumerable
 		include Equality
 
 		def initialize(parent, *nodes)
