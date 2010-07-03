@@ -113,7 +113,7 @@ module Traverse
 			self.parent
 		else
 			node = self
-			while not node.parent.nil?
+			while not node.is_root?
 				node = node.parent
 				return node if not Rind::Nodes[node].xf(path).empty?
 			end
