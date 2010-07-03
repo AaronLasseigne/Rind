@@ -1,10 +1,10 @@
 module Rind
 	# Rind::Html will dynamically create any standard (or not) HTML element.
 	module Html
-		@@self_closing = ['br','hr','img','input','meta','link']
-
 		def self.const_missing(full_class_name, options={}) # :nodoc:
 			klass = Class.new(Element) do
+				@@self_closing = ['br','hr','img','input','meta','link']
+
 			  # <b>Parent:</b> Element
 				# === Example
 				#  Rind::Html::A.new(
