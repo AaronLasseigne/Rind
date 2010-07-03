@@ -4,7 +4,7 @@ module Traverse
 	def ancestors(path = nil)
 		node = self
 		ancestors = Rind::Nodes[]
-		while not node.parent.nil?
+		while not node.is_root?
 			node = node.parent
 			ancestors.push(node)
 		end
