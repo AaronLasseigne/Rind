@@ -1,3 +1,6 @@
+# CSS selector support covers almost all of the level 3 specification. Unsupported
+# parts of specification include :link, :visited, :active, :hover, :focus, :target,
+# :lang, :enabled, :disabled and all 4 pseudo-elements.
 module Css
 	# CSS selector search of a node that returns a list of matching nodes.
 	def css_search(path)
