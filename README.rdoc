@@ -1,4 +1,4 @@
-= Rind
+= Rind (Abandoned)
 
 Rind is a templating engine that turns HTML (and XML) into node trees
 and allows you to create custom tags or reuse someone else's genius.
